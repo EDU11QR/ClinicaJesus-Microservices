@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="api-gateway" />
         <module name="eureka-server" />
+        <module name="auth-service" />
       </profile>
       <profile name="Annotation profile for clinicaJesus" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -24,6 +25,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="api-gateway" options="-parameters" />
+      <module name="auth-service" options="-parameters" />
       <module name="clinicaJesus" options="-parameters" />
       <module name="eureka-server" options="-parameters" />
     </option>
