@@ -1,21 +1,24 @@
 package com.clinicajesus.service.impl;
 
 import com.clinicajesus.dto.LoginRequest;
-import com.clinicajesus.dto.LoginResponse;
 import com.clinicajesus.entity.UsuarioEntity;
 import com.clinicajesus.repository.UsuarioRepository;
 import com.clinicajesus.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import com.clinicajesus.dto.AuthResponse;
+import com.clinicajesus.security.JwtService;
+
 @Service
 @RequiredArgsConstructor
 public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final JwtService jwtService;
 
     @Override
-    public LoginResponse login(LoginRequest request){
+    public AuthResponse login(LoginRequest request){
 
         UsuarioEntity usuario = usuarioRepository
                 .findByUsernameOrEmail(
@@ -28,14 +31,12 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new RuntimeException("Credenciales invalidas");
         }
 
-        return new LoginResponse(
-                usuario.getId(),
-                usuario.getUsername(),
-                usuario.getNombres(),
-                usuario.getApellidos(),
-                usuario.getEmail(),
-                usuario.getTelefono(),
-                usuario.getActivo()
+        String token = jwtService.generateToken(usuario.getUsername());
+
+        return new AuthResponse(
+                token,
+                "Bearer",
+                usuario.getUsername()
         );
     }
 }

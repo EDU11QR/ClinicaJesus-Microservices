@@ -1,7 +1,7 @@
 package com.clinicajesus.controller;
 
+import com.clinicajesus.dto.AuthResponse;
 import com.clinicajesus.dto.LoginRequest;
-import com.clinicajesus.dto.LoginResponse;
 import com.clinicajesus.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ public class AuthController {
 
         // LOGIN
         @PostMapping("/login")
-        public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+        public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
             return ResponseEntity.ok(usuarioService.login(request));
         }
     }
