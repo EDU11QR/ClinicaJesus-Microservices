@@ -12,8 +12,8 @@ import lombok.*;
                 @UniqueConstraint(name = "uk_usuario_email", columnNames = "email")
         }
 )
-@Getter
-@Setter
+//@Getter
+//@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -53,6 +53,14 @@ public class UsuarioEntity {
         if (activo == null) {
             activo = true;
         }
+    }
+
+    public String getUsername(){
+        return username;
+    }
+
+    public String getPassword(){
+        return password;
     }
 
 }
