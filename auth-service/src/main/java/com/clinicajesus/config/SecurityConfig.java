@@ -34,7 +34,15 @@ public class SecurityConfig {
                         // Públicos
                         .requestMatchers("/api/auth/login").permitAll()
 
-                        // Todo lo demás protegido
+                        .requestMatchers("/api/auth/admin")
+                        .hasRole("ADMIN")
+
+                        .requestMatchers("/api/auth/doctor")
+                        .hasRole("DOCTOR")
+
+                        .requestMatchers("/api/auth/paciente")
+                        .hasRole("PACIENTE")
+
                         .anyRequest().authenticated()
                 )
 

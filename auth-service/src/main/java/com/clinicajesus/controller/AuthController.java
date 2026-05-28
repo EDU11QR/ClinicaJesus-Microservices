@@ -31,6 +31,31 @@ public class AuthController {
             );
         }
 
+        // ENDPOINTS de roles   
+        @GetMapping("/admin")
+        public ResponseEntity<String> admin() {
+
+            return ResponseEntity.ok(
+                    "Bienvenido ADMIN"
+            );
+        }
+
+        @GetMapping("/doctor")
+        public ResponseEntity<String> doctor() {
+
+            return ResponseEntity.ok(
+                    "Bienvenido DOCTOR"
+            );
+        }
+
+        @GetMapping("/paciente")
+        public ResponseEntity<String> paciente() {
+
+            return ResponseEntity.ok(
+                    "Bienvenido PACIENTE"
+            );
+        }
+
 
 
 }
