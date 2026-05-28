@@ -63,6 +63,10 @@ public class UsuarioEntity {
         return password;
     }
 
+    public RolUsuario getRol(){
+        return rol;
+    }
+
 }
 
 

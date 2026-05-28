@@ -37,7 +37,10 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new RuntimeException("Credenciales invalidas");
         }
 
-        String token = jwtService.generateToken(usuario.getUsername());
+        String token = jwtService.generateToken(
+                usuario.getUsername(),
+                usuario.getRol().name()
+                );
 
         return new AuthResponse(
                 token,
