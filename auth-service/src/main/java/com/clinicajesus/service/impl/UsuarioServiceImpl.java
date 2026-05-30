@@ -7,6 +7,7 @@ import com.clinicajesus.repository.UsuarioRepository;
 import com.clinicajesus.security.JwtService;
 import com.clinicajesus.service.UsuarioService;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,12 +16,16 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final JwtService jwtService;
 
+    private final PasswordEncoder passwordEncoder;
+
     public UsuarioServiceImpl(
             UsuarioRepository usuarioRepository,
-            JwtService jwtService
+            JwtService jwtService,
+            PasswordEncoder passwordEncoder
     ) {
         this.usuarioRepository = usuarioRepository;
         this.jwtService = jwtService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -33,7 +38,10 @@ public class UsuarioServiceImpl implements UsuarioService {
                 )
                 .orElseThrow(() -> new RuntimeException("Credenciales invalidas"));
 
-        if (!request.password().equals(usuario.getPassword())) {
+        if (!passwordEncoder.matches(
+                request.password(),
+                usuario.getPassword()
+        )) {
             throw new RuntimeException("Credenciales invalidas");
         }
 

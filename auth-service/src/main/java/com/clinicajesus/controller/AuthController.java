@@ -5,6 +5,7 @@ import com.clinicajesus.dto.LoginRequest;
 import com.clinicajesus.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -56,6 +57,11 @@ public class AuthController {
             );
         }
 
+        @GetMapping("/encrypt/{password}")
+        public String encrypt(@PathVariable String password) {
+
+            return new BCryptPasswordEncoder().encode(password);
+        }
 
 
 }
