@@ -2,10 +2,11 @@ package com.clinicajesus.controller;
 
 import com.clinicajesus.dto.AuthResponse;
 import com.clinicajesus.dto.LoginRequest;
+import com.clinicajesus.dto.ProfileResponse;
 import com.clinicajesus.dto.RegisterRequest;
 import com.clinicajesus.service.UsuarioService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -71,6 +72,27 @@ public class AuthController {
             return ResponseEntity.ok(
                     usuarioService.register(request)
             );
+        }
+
+        @GetMapping("/profile")
+        public ResponseEntity<ProfileResponse> profile(
+                Authentication authentication
+        ){
+            String username = authentication.getName();
+
+            String rol = authentication
+                    .getAuthorities()
+                    .iterator()
+                    .next()
+                    .getAuthority();
+
+            return ResponseEntity.ok(
+                    new ProfileResponse(
+                            username,
+                            rol
+                    )
+            );
+
         }
 
 
