@@ -2,6 +2,7 @@ package com.clinicajesus.controller;
 
 import com.clinicajesus.dto.AuthResponse;
 import com.clinicajesus.dto.LoginRequest;
+import com.clinicajesus.dto.RegisterRequest;
 import com.clinicajesus.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -61,6 +62,15 @@ public class AuthController {
         public String encrypt(@PathVariable String password) {
 
             return new BCryptPasswordEncoder().encode(password);
+        }
+
+        @PostMapping("/register")
+        public ResponseEntity<AuthResponse> register(
+                @RequestBody RegisterRequest request
+        ){
+            return ResponseEntity.ok(
+                    usuarioService.register(request)
+            );
         }
 
 

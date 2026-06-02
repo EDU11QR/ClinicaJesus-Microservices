@@ -34,7 +34,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
 
                         // Públicos
-                        .requestMatchers("/api/auth/login","/api/auth/encrypt/**").permitAll()
+                        .requestMatchers(
+                                "/api/auth/login",
+                                "/api/auth/register",
+                                "/api/auth/encrypt/**"
+                        ).permitAll()
 
                         .requestMatchers("/api/auth/admin")
                         .hasRole("ADMIN")
