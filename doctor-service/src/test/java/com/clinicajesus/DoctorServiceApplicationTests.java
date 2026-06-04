@@ -1,4 +1,4 @@
-package com.clinicajesus.doctor_service;
+package com.clinicajesus;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

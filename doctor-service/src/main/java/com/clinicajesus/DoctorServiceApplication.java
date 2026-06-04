@@ -1,4 +1,4 @@
-package com.clinicajesus.doctor_service;
+package com.clinicajesus;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
