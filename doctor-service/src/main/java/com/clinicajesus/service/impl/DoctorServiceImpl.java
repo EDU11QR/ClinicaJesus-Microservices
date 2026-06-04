@@ -62,4 +62,61 @@ public class DoctorServiceImpl implements DoctorService {
                 )
                 .toList();
     }
+
+    @Override
+    public DoctorResponse buscarPorId(Long id){
+
+        DoctorEntity doctor = doctorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Doctor no encontrado"));
+
+        return new DoctorResponse(
+                doctor.getId(),
+                doctor.getNombres(),
+                doctor.getApellidos(),
+                doctor.getCmp(),
+                doctor.getEspecialidad(),
+                doctor.getActivo()
+        );
+    }
+
+    @Override
+    public DoctorResponse actualizar(Long id, DoctorRequest request){
+
+        DoctorEntity doctor = doctorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Doctor no encontrado"));
+
+        doctor.setNombres(request.nombres());
+        doctor.setApellidos(request.apellidos());
+        doctor.setCmp(request.cmp());
+        doctor.setEspecialidad(request.especialidad());
+
+        doctor = doctorRepository.save(doctor);
+
+        return new DoctorResponse(
+                doctor.getId(),
+                doctor.getNombres(),
+                doctor.getApellidos(),
+                doctor.getCmp(),
+                doctor.getEspecialidad(),
+                doctor.getActivo()
+        );
+    }
+
+
+    public void eliminar(Long id){
+        DoctorEntity doctor = doctorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Doctor no encontrado"));
+        doctor.setActivo(false);
+        doctorRepository.save(doctor);
+    }
+
 }
+
+
+
+
+
+
+
+
+

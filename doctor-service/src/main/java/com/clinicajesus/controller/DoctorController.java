@@ -35,4 +35,34 @@ public class DoctorController {
                 doctorService.listar()
         );
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<DoctorResponse> buscarPorId(
+            @PathVariable Long id
+    ){
+        return ResponseEntity.ok(
+                doctorService.buscarPorId(id)
+        );
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<DoctorResponse> actualizar(
+            @PathVariable Long id,
+            @RequestBody DoctorRequest request
+    ){
+        return ResponseEntity.ok(
+                doctorService.actualizar(id, request)
+        );
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminar(
+            @PathVariable Long id
+    ){
+        doctorService.eliminar(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
+
 }
