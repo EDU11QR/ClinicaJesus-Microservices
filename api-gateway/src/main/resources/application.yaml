@@ -13,10 +13,16 @@ spring:
           lower-case-service-id: true
 
       routes:
+
         - id: auth-service
           uri: lb://auth-service
           predicates:
             - Path=/api/auth/**
+
+        - id: doctor-service
+          uri: lb://doctor-service
+          predicates:
+            - Path=/api/doctores/**
 
 eureka:
   client:
