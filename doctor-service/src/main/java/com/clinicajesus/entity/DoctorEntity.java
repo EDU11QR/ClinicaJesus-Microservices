@@ -18,6 +18,10 @@ public class DoctorEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
+    @Column(nullable = false)
+    private Long usuarioId;
+
     @Column(nullable = false, length = 100)
     private String nombres;
 
@@ -32,4 +36,5 @@ public class DoctorEntity {
 
     @Column(nullable = false)
     private Boolean activo;
+
 }

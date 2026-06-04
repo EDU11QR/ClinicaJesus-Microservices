@@ -26,6 +26,7 @@ public class DoctorServiceImpl implements DoctorService {
     ) {
 
         DoctorEntity doctor = DoctorEntity.builder()
+                .usuarioId(request.usuarioId())
                 .nombres(request.nombres())
                 .apellidos(request.apellidos())
                 .cmp(request.cmp())
@@ -37,6 +38,7 @@ public class DoctorServiceImpl implements DoctorService {
 
         return new DoctorResponse(
                 doctor.getId(),
+                doctor.getUsuarioId(),
                 doctor.getNombres(),
                 doctor.getApellidos(),
                 doctor.getCmp(),
@@ -53,6 +55,7 @@ public class DoctorServiceImpl implements DoctorService {
                 .map(doctor ->
                         new DoctorResponse(
                                 doctor.getId(),
+                                doctor.getUsuarioId(),
                                 doctor.getNombres(),
                                 doctor.getApellidos(),
                                 doctor.getCmp(),
@@ -71,6 +74,7 @@ public class DoctorServiceImpl implements DoctorService {
 
         return new DoctorResponse(
                 doctor.getId(),
+                doctor.getUsuarioId(),
                 doctor.getNombres(),
                 doctor.getApellidos(),
                 doctor.getCmp(),
@@ -94,6 +98,7 @@ public class DoctorServiceImpl implements DoctorService {
 
         return new DoctorResponse(
                 doctor.getId(),
+                doctor.getUsuarioId(),
                 doctor.getNombres(),
                 doctor.getApellidos(),
                 doctor.getCmp(),
