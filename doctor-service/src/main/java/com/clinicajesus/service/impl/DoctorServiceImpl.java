@@ -26,7 +26,7 @@ public class DoctorServiceImpl implements DoctorService {
     ) {
 
         DoctorEntity doctor = DoctorEntity.builder()
-                .usuarioId(request.usuarioId())
+                .usuarioId(request.usuarioId()  )
                 .nombres(request.nombres())
                 .apellidos(request.apellidos())
                 .cmp(request.cmp())
@@ -107,7 +107,7 @@ public class DoctorServiceImpl implements DoctorService {
         );
     }
 
-
+    @Override
     public void eliminar(Long id){
         DoctorEntity doctor = doctorRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Doctor no encontrado"));
