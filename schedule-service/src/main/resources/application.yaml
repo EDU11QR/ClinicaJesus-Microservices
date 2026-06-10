@@ -1,0 +1,22 @@
+spring:
+    application:
+        name: schedule-service
+
+    datasource:
+        url: jdbc:mysql://localhost:3306/clinicajesus_db
+        username: root
+        password: mysql123
+
+    jpa:
+        hibernate:
+            ddl-auto: update
+
+        show-sql: true
+
+server:
+    port: 8083
+
+eureka:
+    client:
+        service-url:
+            defaultZone: http://localhost:8761/eureka/
