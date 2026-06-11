@@ -1,5 +1,7 @@
 package com.clinicajesus.service.impl;
 
+import com.clinicajesus.client.DoctorClient;
+import com.clinicajesus.dto.DoctorResponse;
 import com.clinicajesus.dto.HorarioDisponibleRequest;
 import com.clinicajesus.dto.HorarioDisponibleResponse;
 import com.clinicajesus.entity.HorarioDisponibleEntity;
@@ -14,17 +16,25 @@ public class HorarioDisponibleServiceImpl
         implements HorarioDisponibleService {
 
     private final HorarioDisponibleRepository repository;
+    private final DoctorClient doctorClient;
 
     public HorarioDisponibleServiceImpl(
-            HorarioDisponibleRepository repository
+            HorarioDisponibleRepository repository,
+            DoctorClient doctorClient
     ) {
         this.repository = repository;
+        this.doctorClient = doctorClient;
     }
 
     @Override
     public HorarioDisponibleResponse crear(
             HorarioDisponibleRequest request
     ) {
+
+        DoctorResponse doctor =
+                doctorClient.obtenerDoctor(
+                        request.doctorId()
+                );
 
         if (
                 repository.existsByDoctorIdAndFechaAndHoraInicio(
