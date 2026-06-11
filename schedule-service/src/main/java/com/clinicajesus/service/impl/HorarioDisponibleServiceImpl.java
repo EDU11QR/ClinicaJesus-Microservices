@@ -26,6 +26,18 @@ public class HorarioDisponibleServiceImpl
             HorarioDisponibleRequest request
     ) {
 
+        if (
+                repository.existsByDoctorIdAndFechaAndHoraInicio(
+                        request.doctorId(),
+                        request.fecha(),
+                        request.horaInicio()
+                )
+        ) {
+            throw new RuntimeException(
+                    "Ya existe un horario registrado para ese doctor"
+            );
+        }
+
         HorarioDisponibleEntity horario =
                 HorarioDisponibleEntity.builder()
                         .doctorId(request.doctorId())
