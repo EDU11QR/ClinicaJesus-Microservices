@@ -9,6 +9,7 @@ import com.clinicajesus.repository.HorarioDisponibleRepository;
 import com.clinicajesus.service.HorarioDisponibleService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -35,6 +36,13 @@ public class HorarioDisponibleServiceImpl
                 doctorClient.obtenerDoctor(
                         request.doctorId()
                 );
+
+        if (request.fecha().isBefore(LocalDate.now())) {
+            throw new RuntimeException(
+                    "No se pueden registrar horarios en fechas pasadas"
+            );
+        }
+
 
         if (
                 repository.existsByDoctorIdAndFechaAndHoraInicio(
