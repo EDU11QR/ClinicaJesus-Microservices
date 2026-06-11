@@ -24,6 +24,11 @@ spring:
           predicates:
             - Path=/api/doctores/**
 
+        - id: schedule-service
+          uri: lb://schedule-service
+          predicates:
+            - Path=/api/horarios/**
+
 eureka:
   client:
     service-url:
