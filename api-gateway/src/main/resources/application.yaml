@@ -29,6 +29,10 @@ spring:
           predicates:
             - Path=/api/horarios/**
 
+        - id: appointment-service
+          uri: lb://appointment-service
+          predicates:
+            - Path=/api/citas/**
 eureka:
   client:
     service-url:
