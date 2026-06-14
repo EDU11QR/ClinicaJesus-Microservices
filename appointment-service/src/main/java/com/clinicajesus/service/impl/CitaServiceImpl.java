@@ -10,6 +10,7 @@ import com.clinicajesus.service.CitaService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -96,12 +97,12 @@ public class CitaServiceImpl implements CitaService {
         CitaEntity cita =
                 CitaEntity.builder()
                         .pacienteId(request.pacienteId())
-                        .doctorId(horario.doctorId()) // si viene del horario
+                        .doctorId(horario.doctorId())
                         .horarioDisponibleId(request.horarioDisponibleId())
-                        .precio(BigDecimal.ZERO)
-                        .moneda("PEN")
+                        .fecha(horario.fecha())
+                        .horaInicio(horario.horaInicio())
+                        .horaFin(horario.horaFin())
                         .motivoConsulta(request.motivoConsulta())
-                        .observaciones(null)
                         .build();
 
         cita = citaRepository.save(cita);
@@ -139,10 +140,97 @@ public class CitaServiceImpl implements CitaService {
         return new CitaResponse(
                 cita.getId(),
                 cita.getPacienteId(),
+                cita.getDoctorId(),
                 cita.getHorarioDisponibleId(),
+                cita.getFecha(),
+                cita.getHoraInicio(),
+                cita.getHoraFin(),
                 cita.getMotivoConsulta(),
                 cita.getEstado(),
                 cita.getFechaHoraCreacion()
         );
+    }
+
+    @Override
+    public List<CitaResponse> listarPorPaciente(
+            Long pacienteId
+    ) {
+
+        return citaRepository
+                .findByPacienteId(pacienteId)
+                .stream()
+                .map(this::mapToResponse)
+                .toList();
+    }
+
+    @Override
+    public void cancelar(Long id) {
+
+        CitaEntity cita =
+                citaRepository.findById(id)
+                        .orElseThrow(
+                                () -> new RuntimeException(
+                                        "Cita no encontrada"
+                                )
+                        );
+
+        cita.setEstado(
+                EstadoCita.CANCELADA
+        );
+
+        citaRepository.save(cita);
+    }
+
+    @Override
+    public CitaResponse cambiarEstado(
+            Long id,
+            String estado
+    ) {
+
+        CitaEntity cita =
+                citaRepository.findById(id)
+                        .orElseThrow(
+                                () -> new RuntimeException(
+                                        "Cita no encontrada"
+                                )
+                        );
+
+        cita.setEstado(
+                EstadoCita.valueOf(
+                        estado.toUpperCase()
+                )
+        );
+
+        cita = citaRepository.save(cita);
+
+        return mapToResponse(cita);
+    }
+
+    @Override
+    public List<CitaResponse> listarPorDoctor(
+            Long doctorId
+    ) {
+
+        return citaRepository
+                .findByDoctorId(doctorId)
+                .stream()
+                .map(this::mapToResponse)
+                .toList();
+    }
+
+    @Override
+    public List<CitaResponse> listarPorDoctorYFecha(
+            Long doctorId,
+            LocalDate fecha
+    ) {
+
+        return citaRepository
+                .findByDoctorIdAndFecha(
+                        doctorId,
+                        fecha
+                )
+                .stream()
+                .map(this::mapToResponse)
+                .toList();
     }
 }

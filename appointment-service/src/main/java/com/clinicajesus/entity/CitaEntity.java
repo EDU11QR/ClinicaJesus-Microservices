@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "citas")
@@ -26,6 +28,15 @@ public class CitaEntity {
     private Long doctorId;
 
     private Long horarioDisponibleId;
+
+    @Column(nullable = false)
+    private LocalDate fecha;
+
+    @Column(nullable = false)
+    private LocalTime horaInicio;
+
+    @Column(nullable = false)
+    private LocalTime horaFin;
 
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal precio;

@@ -4,6 +4,7 @@ import com.clinicajesus.entity.CitaEntity;
 import com.clinicajesus.enums.EstadoCita;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface CitaRepository
@@ -12,6 +13,19 @@ public interface CitaRepository
     boolean existsByHorarioDisponibleIdAndEstadoIn(
             Long horarioDisponibleId,
             List<EstadoCita> estados
+    );
+
+    List<CitaEntity> findByPacienteId(
+            Long pacienteId
+    );
+
+    List<CitaEntity> findByDoctorId(
+            Long doctorId
+    );
+
+    List<CitaEntity> findByDoctorIdAndFecha(
+            Long doctorId,
+            LocalDate fecha
     );
 
 }

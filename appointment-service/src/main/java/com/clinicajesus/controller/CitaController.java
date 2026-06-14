@@ -6,6 +6,7 @@ import com.clinicajesus.service.CitaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -42,6 +43,50 @@ public class CitaController {
     ) {
         return ResponseEntity.ok(
                 citaService.buscarPorId(id)
+        );
+    }
+
+    @PutMapping("/{id}/estado")
+    public ResponseEntity<CitaResponse> cambiarEstado(
+            @PathVariable Long id,
+            @RequestParam String estado
+    ) {
+
+        return ResponseEntity.ok(
+                citaService.cambiarEstado(
+                        id,
+                        estado
+                )
+        );
+    }
+
+
+    @GetMapping("/por-doctor")
+    public ResponseEntity<List<CitaResponse>>
+    listarPorDoctor(
+            @RequestParam Long doctorId
+    ) {
+
+        return ResponseEntity.ok(
+                citaService.listarPorDoctor(
+                        doctorId
+                )
+        );
+    }
+
+
+    @GetMapping("/por-doctor-y-fecha")
+    public ResponseEntity<List<CitaResponse>>
+    listarPorDoctorYFecha(
+            @RequestParam Long doctorId,
+            @RequestParam LocalDate fecha
+    ) {
+
+        return ResponseEntity.ok(
+                citaService.listarPorDoctorYFecha(
+                        doctorId,
+                        fecha
+                )
         );
     }
 
