@@ -1,9 +1,6 @@
 package com.clinicajesus.controller;
 
-import com.clinicajesus.dto.AuthResponse;
-import com.clinicajesus.dto.LoginRequest;
-import com.clinicajesus.dto.ProfileResponse;
-import com.clinicajesus.dto.RegisterRequest;
+import com.clinicajesus.dto.*;
 import com.clinicajesus.service.UsuarioService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -71,6 +68,15 @@ public class AuthController {
         ){
             return ResponseEntity.ok(
                     usuarioService.register(request)
+            );
+        }
+
+        @GetMapping("/usuarios/{id}")
+        public ResponseEntity<UsuarioResponse> obtenerPorId(
+                @PathVariable Long id
+        ){
+            return ResponseEntity.ok(
+                    usuarioService.obtenerPorId(id)
             );
         }
 

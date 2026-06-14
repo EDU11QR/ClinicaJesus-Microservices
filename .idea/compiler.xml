@@ -9,7 +9,6 @@
         <outputRelativeToContentRoot value="true" />
         <module name="api-gateway" />
         <module name="eureka-server" />
-        <module name="auth-service" />
       </profile>
       <profile name="Annotation profile for clinicaJesus" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -32,6 +31,15 @@
         <module name="appointment-service" />
         <module name="schedule-service" />
         <module name="doctor-service" />
+      </profile>
+      <profile name="Annotation profile for auth-service" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar" />
+        </processorPath>
+        <module name="auth-service" />
       </profile>
     </annotationProcessing>
   </component>

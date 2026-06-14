@@ -4,6 +4,11 @@ import com.clinicajesus.enums.RolUsuario;
 import jakarta.persistence.*;
 import lombok.*;
 
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(
         name = "usuarios",
@@ -14,9 +19,9 @@ import lombok.*;
 )
 //@Getter
 //@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+//@NoArgsConstructor
+//@AllArgsConstructor
+//@Builder
 public class UsuarioEntity {
 
     @Id

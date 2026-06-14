@@ -8,6 +8,7 @@ import com.clinicajesus.enums.RolUsuario;
 import com.clinicajesus.repository.UsuarioRepository;
 import com.clinicajesus.security.JwtService;
 import com.clinicajesus.service.UsuarioService;
+import com.clinicajesus.dto.UsuarioResponse;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -106,6 +107,28 @@ public class UsuarioServiceImpl implements UsuarioService {
                 token,
                 "Bearer",
                 usuario.getUsername()
+        );
+    }
+
+    @Override
+    public UsuarioResponse obtenerPorId(Long id) {
+
+        UsuarioEntity usuario = usuarioRepository.findById(id)
+                .orElseThrow(
+                        () -> new RuntimeException(
+                                "Usuario no encontrado"
+                        )
+                );
+
+        return new UsuarioResponse(
+                usuario.getId(),
+                usuario.getUsername(),
+                usuario.getNombres(),
+                usuario.getApellidos(),
+                usuario.getEmail(),
+                usuario.getTelefono(),
+                usuario.getRol(),
+                usuario.getActivo()
         );
     }
 
