@@ -2,7 +2,7 @@ package com.clinicajesus.dto;
 
 public record CitaRequest(
         Long pacienteId,
-        Long horarioDisponible,
+        Long horarioDisponibleId,
         String motivoConsulta
 ) {
 }
