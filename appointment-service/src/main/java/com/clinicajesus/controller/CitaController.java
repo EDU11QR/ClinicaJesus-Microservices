@@ -37,6 +37,16 @@ public class CitaController {
         );
     }
 
+    @GetMapping("/por-paciente")
+    public ResponseEntity<List<CitaResponse>>listarPorPaciente(
+            @RequestParam Long pacienteId
+    ){
+        return ResponseEntity.ok(
+                citaService.listarPorPaciente(pacienteId)
+        );
+
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<CitaResponse> buscarPorId(
             @PathVariable Long id
