@@ -109,6 +109,32 @@ public class HorarioDisponibleServiceImpl
                                 )
                         );
 
+        if (request.fecha().isBefore(LocalDate.now())){
+            throw new RuntimeException(
+                    "No se pueden registrar horarios en fechas pasadas"
+            );
+        }
+
+        if (
+                repository.existsByDoctorIdAndFechaAndHoraInicio(
+                        request.doctorId(),
+                        request.fecha(),
+                        request.horaInicio()
+                )
+                        &&
+                        (
+                                !horario.getDoctorId().equals(request.doctorId())
+                                        ||
+                                        !horario.getFecha().equals(request.fecha())
+                                        ||
+                                        !horario.getHoraInicio().equals(request.horaInicio())
+                        )
+        ) {
+            throw new RuntimeException(
+                    "Ya existe un horario registrado para ese doctor"
+            );
+        }
+
         horario.setDoctorId(request.doctorId());
         horario.setFecha(request.fecha());
         horario.setHoraInicio(request.horaInicio());

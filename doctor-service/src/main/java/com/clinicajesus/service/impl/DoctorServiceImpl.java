@@ -50,7 +50,7 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public List<DoctorResponse> listar() {
 
-        return doctorRepository.findAll()
+        return doctorRepository.findByActivoTrue()
                 .stream()
                 .map(doctor ->
                         new DoctorResponse(
@@ -71,6 +71,12 @@ public class DoctorServiceImpl implements DoctorService {
 
         DoctorEntity doctor = doctorRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Doctor no encontrado"));
+
+        if(!doctor.getActivo()){
+            throw new RuntimeException(
+                    "Doctor no disponible"
+            );
+        }
 
         return new DoctorResponse(
                 doctor.getId(),
