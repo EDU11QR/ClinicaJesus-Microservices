@@ -3,6 +3,7 @@ package com.clinicajesus.exception;
 import com.clinicajesus.dto.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -11,16 +12,21 @@ import java.time.LocalDateTime;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(RuntimeException.class)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse>
-    handleRuntimeException(
-            RuntimeException ex
+    handleValidation(
+            MethodArgumentNotValidException ex
     ){
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
+
+        String mensaje =
+                ex.getBindingResult()
+                        .getFieldError()
+                        .getDefaultMessage();
+
+        return ResponseEntity.badRequest()
                 .body(
                         new ErrorResponse(
-                                ex.getMessage(),
+                                mensaje,
                                 LocalDateTime.now()
                         )
                 );

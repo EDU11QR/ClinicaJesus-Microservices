@@ -3,6 +3,7 @@ package com.clinicajesus.controller;
 import com.clinicajesus.dto.CitaRequest;
 import com.clinicajesus.dto.CitaResponse;
 import com.clinicajesus.service.CitaService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,7 @@ public class CitaController {
 
     @PostMapping
     public ResponseEntity<CitaResponse> crear(
+            @Valid
             @RequestBody CitaRequest request
     ) {
         return ResponseEntity.ok(
