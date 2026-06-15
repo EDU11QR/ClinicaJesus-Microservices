@@ -219,7 +219,7 @@ public class CitaServiceImpl implements CitaService {
     ) {
 
         return citaRepository
-                .findByDoctorId(doctorId)
+                .findByDoctorIdOrderByFechaAscHoraInicioAsc(doctorId)
                 .stream()
                 .map(this::mapToResponse)
                 .toList();
@@ -232,7 +232,7 @@ public class CitaServiceImpl implements CitaService {
     ) {
 
         return citaRepository
-                .findByDoctorIdAndFecha(
+                .findByDoctorIdAndFechaOrderByHoraInicioAsc(
                         doctorId,
                         fecha
                 )

@@ -19,11 +19,11 @@ public interface CitaRepository
             Long pacienteId
     );
 
-    List<CitaEntity> findByDoctorId(
+    List<CitaEntity> findByDoctorIdOrderByFechaAscHoraInicioAsc(
             Long doctorId
     );
 
-    List<CitaEntity> findByDoctorIdAndFecha(
+    List<CitaEntity> findByDoctorIdAndFechaOrderByHoraInicioAsc(
             Long doctorId,
             LocalDate fecha
     );
