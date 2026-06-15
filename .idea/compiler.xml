@@ -20,7 +20,7 @@
         </processorPath>
         <module name="clinicaJesus" />
       </profile>
-      <profile name="Annotation profile for doctor-service" enabled="true">
+      <profile name="Annotation profile for schedule-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
