@@ -13,7 +13,7 @@ public record CitaRequest(
         Long horarioDisponibleId,
 
         @NotBlank(message = "motivoConsulta es obligatorio")
-        @Size(max = 200, message = "El motivo de la consulta no puede superar los 500 carateres")
+        @Size(max = 200, message = "El motivo de la consulta no puede superar los 200 carateres")
         String motivoConsulta
 ) {
 }
