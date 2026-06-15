@@ -38,7 +38,12 @@ public class SecurityConfig {
                                 "/api/auth/login",
                                 "/api/auth/register",
                                 "/api/auth/encrypt/**",
-                                "/api/auth/usuarios/**"
+                                "/api/auth/usuarios/**",
+
+                                // Swagger
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui.html"
                          ).permitAll()
 
                         .requestMatchers("/api/auth/admin")
