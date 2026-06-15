@@ -16,8 +16,6 @@ public interface CitaService {
 
     List<CitaResponse> listarPorPaciente(Long pacienteId);
 
-    void cancelar(Long id);
-
     CitaResponse cambiarEstado(
             Long id,
             String estado

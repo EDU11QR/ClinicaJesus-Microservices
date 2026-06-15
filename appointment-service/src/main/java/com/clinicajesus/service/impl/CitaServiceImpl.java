@@ -164,24 +164,6 @@ public class CitaServiceImpl implements CitaService {
     }
 
     @Override
-    public void cancelar(Long id) {
-
-        CitaEntity cita =
-                citaRepository.findById(id)
-                        .orElseThrow(
-                                () -> new RuntimeException(
-                                        "Cita no encontrada"
-                                )
-                        );
-
-        cita.setEstado(
-                EstadoCita.CANCELADA
-        );
-
-        citaRepository.save(cita);
-    }
-
-    @Override
     public CitaResponse cambiarEstado(
             Long id,
             String estado
@@ -195,10 +177,35 @@ public class CitaServiceImpl implements CitaService {
                                 )
                         );
 
-        cita.setEstado(
+        EstadoCita nuevoEstado =
                 EstadoCita.valueOf(
                         estado.toUpperCase()
-                )
+                );
+
+        if (cita.getEstado() == EstadoCita.CANCELADA) {
+            throw new RuntimeException(
+                    "No se puede modificar una cita cancelada"
+            );
+        }
+
+        if (cita.getEstado() == EstadoCita.ATENDIDA) {
+            throw new RuntimeException(
+                    "La cita ya fue atendida"
+            );
+        }
+
+        if (
+                cita.getEstado() == EstadoCita.CONFIRMADA
+                        &&
+                        nuevoEstado == EstadoCita.CONFIRMADA
+        ) {
+            throw new RuntimeException(
+                    "La cita ya está confirmada"
+            );
+        }
+
+        cita.setEstado(
+                nuevoEstado
         );
 
         cita = citaRepository.save(cita);
