@@ -15,4 +15,9 @@ public interface PagoService {
 
     List<PagoResponse> listarPorPaciente(Long pacienteId);
 
+    PagoResponse cambiarEstado(
+            Long id,
+            String estado
+    );
+
 }

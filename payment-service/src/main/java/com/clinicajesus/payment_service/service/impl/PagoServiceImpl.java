@@ -3,6 +3,7 @@ package com.clinicajesus.payment_service.service.impl;
 import com.clinicajesus.payment_service.dto.PagoRequest;
 import com.clinicajesus.payment_service.dto.PagoResponse;
 import com.clinicajesus.payment_service.entity.PagoEntity;
+import com.clinicajesus.payment_service.enums.EstadoPago;
 import com.clinicajesus.payment_service.repository.PagoRepository;
 import com.clinicajesus.payment_service.service.PagoService;
 import org.springframework.stereotype.Service;
@@ -85,5 +86,30 @@ public class PagoServiceImpl implements PagoService {
                 pago.getEstado(),
                 pago.getFechaPago()
         );
+    }
+
+    @Override
+    public PagoResponse cambiarEstado(
+            Long id,
+            String estado
+    ) {
+
+        PagoEntity pago =
+                pagoRepository.findById(id)
+                        .orElseThrow(
+                                () -> new RuntimeException(
+                                        "Pago no encontrado"
+                                )
+                        );
+
+        pago.setEstado(
+                EstadoPago.valueOf(
+                        estado.toUpperCase()
+                )
+        );
+
+        pago = pagoRepository.save(pago);
+
+        return mapToResponse(pago);
     }
 }

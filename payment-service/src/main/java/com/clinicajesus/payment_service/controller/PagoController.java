@@ -60,4 +60,18 @@ public class PagoController {
                 )
         );
     }
+
+    @PutMapping("/{id}/estado")
+    public ResponseEntity<PagoResponse> cambiarEstado(
+            @PathVariable Long id,
+            @RequestParam String estado
+    ) {
+
+        return ResponseEntity.ok(
+                pagoService.cambiarEstado(
+                        id,
+                        estado
+                )
+        );
+    }
 }
