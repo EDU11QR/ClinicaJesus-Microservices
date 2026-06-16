@@ -1,5 +1,6 @@
 package com.clinicajesus.payment_service.service.impl;
 
+import com.clinicajesus.payment_service.client.AppointmentClient;
 import com.clinicajesus.payment_service.dto.PagoRequest;
 import com.clinicajesus.payment_service.dto.PagoResponse;
 import com.clinicajesus.payment_service.entity.PagoEntity;
@@ -14,11 +15,14 @@ import java.util.List;
 public class PagoServiceImpl implements PagoService {
 
     private final PagoRepository pagoRepository;
+    private final AppointmentClient appointmentClient;
 
     public PagoServiceImpl(
-            PagoRepository pagoRepository
+            PagoRepository pagoRepository,
+            AppointmentClient appointmentClient
     ) {
         this.pagoRepository = pagoRepository;
+        this.appointmentClient = appointmentClient;
     }
 
     @Override
@@ -109,6 +113,16 @@ public class PagoServiceImpl implements PagoService {
         );
 
         pago = pagoRepository.save(pago);
+
+        if (
+                pago.getEstado() == EstadoPago.PAGADO
+        ) {
+
+            appointmentClient.confirmarCita(
+                    pago.getCitaId(),
+                    "CONFIRMADA"
+            );
+        }
 
         return mapToResponse(pago);
     }
