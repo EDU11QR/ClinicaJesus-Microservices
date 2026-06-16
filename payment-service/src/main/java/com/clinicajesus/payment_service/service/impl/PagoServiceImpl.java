@@ -5,6 +5,7 @@ import com.clinicajesus.payment_service.dto.PagoRequest;
 import com.clinicajesus.payment_service.dto.PagoResponse;
 import com.clinicajesus.payment_service.entity.PagoEntity;
 import com.clinicajesus.payment_service.enums.EstadoPago;
+import com.clinicajesus.payment_service.pdf.PdfGeneratorService;
 import com.clinicajesus.payment_service.repository.PagoRepository;
 import com.clinicajesus.payment_service.service.PagoService;
 import org.springframework.stereotype.Service;
@@ -17,12 +18,16 @@ public class PagoServiceImpl implements PagoService {
     private final PagoRepository pagoRepository;
     private final AppointmentClient appointmentClient;
 
+    private final PdfGeneratorService pdfGeneratorService;
+
     public PagoServiceImpl(
             PagoRepository pagoRepository,
-            AppointmentClient appointmentClient
+            AppointmentClient appointmentClient,
+            PdfGeneratorService pdfGeneratorService
     ) {
         this.pagoRepository = pagoRepository;
         this.appointmentClient = appointmentClient;
+        this.pdfGeneratorService = pdfGeneratorService;
     }
 
     @Override
@@ -125,5 +130,24 @@ public class PagoServiceImpl implements PagoService {
         }
 
         return mapToResponse(pago);
+    }
+
+    @Override
+    public byte[] descargarComprobante(
+            Long pagoId
+    ) {
+
+        PagoEntity pago =
+                pagoRepository.findById(pagoId)
+                        .orElseThrow(
+                                () -> new RuntimeException(
+                                        "Pago no encontrado"
+                                )
+                        );
+
+        return pdfGeneratorService
+                .generarComprobante(
+                        pago
+                );
     }
 }

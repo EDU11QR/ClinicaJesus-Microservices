@@ -74,4 +74,26 @@ public class PagoController {
                 )
         );
     }
+
+    @GetMapping("/{id}/comprobante")
+    public ResponseEntity<byte[]> descargarComprobante(
+            @PathVariable Long id
+    ) {
+
+        byte[] pdf =
+                pagoService.descargarComprobante(
+                        id
+                );
+
+        return ResponseEntity.ok()
+                .header(
+                        "Content-Disposition",
+                        "attachment; filename=comprobante.pdf"
+                )
+                .header(
+                        "Content-Type",
+                        "application/pdf"
+                )
+                .body(pdf);
+    }
 }

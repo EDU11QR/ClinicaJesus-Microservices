@@ -20,4 +20,8 @@ public interface PagoService {
             String estado
     );
 
+    byte[] descargarComprobante(
+            Long pagoId
+    );
+
 }
