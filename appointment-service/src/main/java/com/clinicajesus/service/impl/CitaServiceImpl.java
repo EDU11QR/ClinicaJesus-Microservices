@@ -1,6 +1,7 @@
 package com.clinicajesus.service.impl;
 
 import com.clinicajesus.client.AuthClient;
+import com.clinicajesus.client.PaymentClient;
 import com.clinicajesus.client.ScheduleClient;
 import com.clinicajesus.dto.*;
 import com.clinicajesus.entity.CitaEntity;
@@ -21,14 +22,18 @@ public class CitaServiceImpl implements CitaService {
     private final AuthClient authClient;
     private final ScheduleClient scheduleClient;
 
+    private final PaymentClient paymentClient;
+
     public CitaServiceImpl(
             CitaRepository citaRepository,
             AuthClient authClient,
-            ScheduleClient scheduleClient
+            ScheduleClient scheduleClient,
+            PaymentClient paymentClient
     ) {
         this.citaRepository = citaRepository;
         this.authClient = authClient;
         this.scheduleClient = scheduleClient;
+        this.paymentClient = paymentClient;
     }
 
     @Override
@@ -106,6 +111,20 @@ public class CitaServiceImpl implements CitaService {
                         .build();
 
         cita = citaRepository.save(cita);
+
+        paymentClient.crearPago(
+
+                new PagoRequest(
+
+                        cita.getId(),
+
+                        cita.getPacienteId(),
+
+                        BigDecimal.valueOf(80),
+
+                        "YAPE"
+                )
+        );
 
         return mapToResponse(cita);
     }
