@@ -5,6 +5,21 @@ spring:
   application:
     name: notification-service
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+
+    username: quisperojasedu@gmail.com
+
+    password: hoey vydf ffvl cpqy
+
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
 eureka:
   client:
     service-url:
