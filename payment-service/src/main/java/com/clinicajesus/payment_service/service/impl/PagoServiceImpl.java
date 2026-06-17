@@ -1,8 +1,12 @@
 package com.clinicajesus.payment_service.service.impl;
 
 import com.clinicajesus.payment_service.client.AppointmentClient;
+import com.clinicajesus.payment_service.client.AuthClient;
+import com.clinicajesus.payment_service.client.NotificationClient;
+import com.clinicajesus.payment_service.dto.EmailRequest;
 import com.clinicajesus.payment_service.dto.PagoRequest;
 import com.clinicajesus.payment_service.dto.PagoResponse;
+import com.clinicajesus.payment_service.dto.UsuarioResponse;
 import com.clinicajesus.payment_service.entity.PagoEntity;
 import com.clinicajesus.payment_service.enums.EstadoPago;
 import com.clinicajesus.payment_service.pdf.PdfGeneratorService;
@@ -17,16 +21,22 @@ public class PagoServiceImpl implements PagoService {
 
     private final PagoRepository pagoRepository;
     private final AppointmentClient appointmentClient;
-
+    private final AuthClient authClient;
+    private final NotificationClient notificationClient;
     private final PdfGeneratorService pdfGeneratorService;
+
 
     public PagoServiceImpl(
             PagoRepository pagoRepository,
             AppointmentClient appointmentClient,
+            AuthClient authClient,
+            NotificationClient notificationClient,
             PdfGeneratorService pdfGeneratorService
     ) {
         this.pagoRepository = pagoRepository;
         this.appointmentClient = appointmentClient;
+        this.authClient = authClient;
+        this.notificationClient = notificationClient;
         this.pdfGeneratorService = pdfGeneratorService;
     }
 
@@ -126,6 +136,26 @@ public class PagoServiceImpl implements PagoService {
             appointmentClient.confirmarCita(
                     pago.getCitaId(),
                     "CONFIRMADA"
+            );
+
+            UsuarioResponse paciente =
+                    authClient.obtenerUsuario(
+                            pago.getPacienteId()
+                    );
+
+            notificationClient.enviarCorreo(
+
+                    new EmailRequest(
+
+                            paciente.email(),
+
+                            "Pago confirmado",
+
+                            "Hola "
+                                    + paciente.nombres()
+                                    + ", su pago fue registrado correctamente. "
+                                    + "La cita médica ha sido confirmada."
+                    )
             );
         }
 
