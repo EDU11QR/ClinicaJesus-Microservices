@@ -1,5 +1,6 @@
 package com.clinicajesus.notification_service.controller;
 
+import com.clinicajesus.notification_service.dto.EmailAdjuntoRequest;
 import com.clinicajesus.notification_service.dto.EmailRequest;
 import com.clinicajesus.notification_service.service.EmailService;
 import org.springframework.http.ResponseEntity;
@@ -28,4 +29,20 @@ public class EmailController {
                 "Correo enviado correctamente"
         );
     }
+
+    @PostMapping("/correo-adjunto")
+    public ResponseEntity<String>
+    enviarCorreoConAdjunto(
+            @RequestBody EmailAdjuntoRequest request
+    ) {
+
+        emailService.enviarCorreoConAdjunto(
+                request
+        );
+
+        return ResponseEntity.ok(
+                "Correo con adjunto enviado"
+        );
+    }
+
 }

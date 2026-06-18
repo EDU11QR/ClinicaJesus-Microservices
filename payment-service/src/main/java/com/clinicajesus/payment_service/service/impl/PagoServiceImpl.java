@@ -3,10 +3,7 @@ package com.clinicajesus.payment_service.service.impl;
 import com.clinicajesus.payment_service.client.AppointmentClient;
 import com.clinicajesus.payment_service.client.AuthClient;
 import com.clinicajesus.payment_service.client.NotificationClient;
-import com.clinicajesus.payment_service.dto.EmailRequest;
-import com.clinicajesus.payment_service.dto.PagoRequest;
-import com.clinicajesus.payment_service.dto.PagoResponse;
-import com.clinicajesus.payment_service.dto.UsuarioResponse;
+import com.clinicajesus.payment_service.dto.*;
 import com.clinicajesus.payment_service.entity.PagoEntity;
 import com.clinicajesus.payment_service.enums.EstadoPago;
 import com.clinicajesus.payment_service.pdf.PdfGeneratorService;
@@ -143,9 +140,14 @@ public class PagoServiceImpl implements PagoService {
                             pago.getPacienteId()
                     );
 
-            notificationClient.enviarCorreo(
+            byte[] pdf =
+                    pdfGeneratorService.generarComprobante(
+                            pago
+                    );
 
-                    new EmailRequest(
+            notificationClient.enviarCorreoConAdjunto(
+
+                    new EmailAdjuntoRequest(
 
                             paciente.email(),
 
@@ -154,7 +156,11 @@ public class PagoServiceImpl implements PagoService {
                             "Hola "
                                     + paciente.nombres()
                                     + ", su pago fue registrado correctamente. "
-                                    + "La cita médica ha sido confirmada."
+                                    + "Adjuntamos el comprobante de pago.",
+
+                            pdf,
+
+                            "comprobante.pdf"
                     )
             );
         }
